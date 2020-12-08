@@ -49,13 +49,17 @@ public class Task extends AppCompatActivity {
 
 
     private void getDescription(final String taskName){
+        Log.d(TAG, "describing "+taskName);
         taskViewModel.getTasks(taskName).observe(this, new Observer<List<TaskEntity>>() {
             @Override
             public void onChanged(List<TaskEntity> taskEntities) {
-                taskModel = new TaskModel(taskEntities.get(0).getTaskName(), taskEntities.get(0).getTaskDescription());
 
-                taskNameView.setText(taskModel.getTaskName());
-                taskDescriptionEditText.setText(taskModel.getTaskDescription());
+                if (taskEntities.size() > 0) {
+                    taskModel = new TaskModel(taskEntities.get(0).getTaskName(), taskEntities.get(0).getTaskDescription());
+
+                    taskNameView.setText(taskModel.getTaskName());
+                    taskDescriptionEditText.setText(taskModel.getTaskDescription());
+                }
             }
         });
     }
